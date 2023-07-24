@@ -4,9 +4,10 @@ namespace Assets.Scripts.Player
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private float speed; //—тайлкод вопрос. ѕишу без земли, так как это выгл€дит пон€тнее, когда есть различие сериализуемого пол€ при чтении полей по коду. Ќормально ли так писать или все пишут через землю сериализуемые пол€?
+        [SerializeField] private float _speed; //—тайлкод вопрос. ѕишу без земли, так как это выгл€дит пон€тнее, когда есть различие сериализуемого пол€ при чтении полей по коду. Ќормально ли так писать или все пишут через землю сериализуемые пол€?
         private float _inputHorizontal;
         private float _inputVertical;
+        private Vector3 averagePredicitonPosition;
 
         public void SetInputs(float horizontal, float vertical)
         {
@@ -22,8 +23,13 @@ namespace Assets.Scripts.Player
 
         private void Move()
         {
-            Vector3 direction = new Vector3(_inputHorizontal, 0, _inputVertical);
-            transform.position += direction * Time.deltaTime * speed;
+            Vector3 direction = new Vector3(_inputHorizontal, 0, _inputVertical).normalized;
+            transform.position += direction * Time.deltaTime * _speed;
+        }
+
+        public void GetMove(out Vector3 position)
+        {
+            position = transform.position;
         }
     }
 }
