@@ -7,6 +7,7 @@ namespace Assets.Scripts.Enemy
     public class EnemyController : MonoBehaviour
     {
         private Vector3 _newPosition;
+        private Vector3 _oldPosition = Vector3.zero;
         public void OnChange(List<DataChange> changes)
         {
             foreach (var dataChange in changes)
@@ -14,9 +15,11 @@ namespace Assets.Scripts.Enemy
                 switch (dataChange.Field)
                 {
                     case "x":
+                        _oldPosition.x = (float)dataChange.PreviousValue; //(float)dataChange.Value;
                         _newPosition.x = (float)dataChange.Value;
                         break;
                     case "y":
+                        _oldPosition.z = (float)dataChange.PreviousValue; //(float)dataChange.Value;
                         _newPosition.z = (float)dataChange.Value;
                         break;
                     default:
@@ -24,11 +27,13 @@ namespace Assets.Scripts.Enemy
                         break;
                 }
             }
+            if (_oldPosition != _newPosition)
+                _newPosition = Vector3.Lerp(_oldPosition, _newPosition, 5f);
         }
 
         private void Update()
         {
-            transform.position = Vector3.Lerp(transform.position, _newPosition, 5f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, _newPosition, 10f * Time.deltaTime);
         }
     }
 }
