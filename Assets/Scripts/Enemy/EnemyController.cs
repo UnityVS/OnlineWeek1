@@ -27,13 +27,8 @@ namespace Assets.Scripts.Enemy
                         break;
                 }
             }
-            if (_oldPosition != _newPosition)
-                _newPosition = Vector3.Lerp(_oldPosition, _newPosition, 5f);
         }
 
-        private void Update()
-        {
-            transform.position = Vector3.Lerp(transform.position, _newPosition, 10f * Time.deltaTime);
-        }
+        private void Update() => transform.position = Vector3.Lerp(transform.position, _newPosition, 20f * Time.deltaTime);
     }
 }
