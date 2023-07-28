@@ -514,8 +514,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _colyseusSettings: {fileID: 11400000, guid: 701d71a6b4ff5fc49832c60b92c5496e, type: 2}
-  _player: {fileID: 9004932245662125686, guid: 56fc1c83f35b2d94aa3a53a1d3267453, type: 3}
-  _enemy: {fileID: 8975613724712478035, guid: 5471e90149ce4414187df6badc98b243, type: 3}
+  _playerPrefab: {fileID: 9004932245662125686, guid: 56fc1c83f35b2d94aa3a53a1d3267453,
+    type: 3}
+  _enemyPrefab: {fileID: 8975613724712478035, guid: 5471e90149ce4414187df6badc98b243,
+    type: 3}
 --- !u!4 &2120514308
 Transform:
   m_ObjectHideFlags: 0

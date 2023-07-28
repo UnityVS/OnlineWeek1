@@ -7,9 +7,12 @@ namespace Assets.Scripts.Multiplayer
 {
     public class MultiplayerManager : ColyseusManager<MultiplayerManager>
     {
-        [SerializeField] private GameObject _player;
-        [SerializeField] private EnemyController _enemy;
+        [SerializeField] private GameObject _playerPrefab;
+        [SerializeField] private EnemyController _enemyPrefab;
+        private Dictionary<string, EnemyController> _playerList = new Dictionary<string, EnemyController>();
+
         private ColyseusRoom<State> _room;
+
         protected override void Awake()
         {
             base.Awake();
@@ -27,14 +30,15 @@ namespace Assets.Scripts.Multiplayer
         private void CreatePlayer(Player player)
         {
             Vector3 position = new Vector3(player.x, 0, player.y);
-            Instantiate(_player, position, Quaternion.identity);
+            Instantiate(_playerPrefab, position, Quaternion.identity);
         }
 
         private void CreateEnemy(string key, Player player)
         {
             Vector3 position = new Vector3(player.x, 0, player.y);
-            EnemyController newEnemy = Instantiate(_enemy, position, Quaternion.identity);
+            EnemyController newEnemy = Instantiate(_enemyPrefab, position, Quaternion.identity);
             player.OnChange += newEnemy.OnChange;
+            _playerList.Add(key, newEnemy);
         }
 
         private void OnChange(State state, bool isFirstState)
@@ -55,6 +59,8 @@ namespace Assets.Scripts.Multiplayer
 
         private void RemoveEnemy(string key, Player player)
         {
+            Destroy(_playerList[key].gameObject);
+            _playerList.Remove(key);
 
         }
 
@@ -66,7 +72,6 @@ namespace Assets.Scripts.Multiplayer
         protected override void OnDestroy()
         {
             base.OnDestroy();
-
             _room.Leave();
         }
     }
